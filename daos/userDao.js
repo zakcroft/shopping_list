@@ -1,19 +1,18 @@
-var  mongo = require('../db/mongo.js');
+var  db = require('../db/mongo').db;
+var users = db.collection('users');
 
 exports.login = function(){
 
-    mongo.users.insert({test: 'obj'}, {safe:true}, function(err, objects) {
-        if (err)
-            console.warn(err.message);
-    });
 }
 
 exports.create = function(err, user){
     if (err) throw err;
 
-    mongo.users.insert({test: 'obj'}, {safe:true}, function(err, objects) {
-        if (err)
+    users.insert(user, {safe:true}, function(err, objects) {
+        if (err) {
             console.warn(err.message);
+        }
+
     });
 }
 
