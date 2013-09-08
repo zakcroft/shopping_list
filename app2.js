@@ -38,8 +38,4 @@ main = new Main(mongoDb, app, router).init();
 
 
 //mongo.on('connected', start);
-/**
- * Created by zak
- * Date: 06/09/13
- * Time: 14:09
- */
+
