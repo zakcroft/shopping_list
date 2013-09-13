@@ -6,13 +6,13 @@ var router = function(app){
 
         app.get('/welcome', home.index);
 
+        app.get('/register', user.register);
+
+        app.post('/register', user.register);
+
         app.get('/login', user.login);
 
-        //app.get('/user/new', user.registerUser);
-
-        app.post('/login', user.registerUser);
-
-
+        app.post('/login', user.login);
 
 }
 

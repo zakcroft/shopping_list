@@ -2,24 +2,15 @@ var  db = require('../db/mongo').db;
 var users = db.collection('users');
 
 
-exports.login = function (req, res, callback) {
+exports.login = function (email,  password, callback) {
 
-    var username = req.body.username;
-    var password = req.body.password;
-
-    // TODO authenticate
-
-    users.findOne({"name": username, "password":password}, function(err, user){
+    users.findOne({"email": email, "password":password}, function(err, user){
         if(err) throw err;
         callback(err, user);
     })
 }
 
-exports.create = function (req, res, callback) {
-
-    var email = req.body.email
-    var username = req.body.username
-    var password = req.body.password
+exports.create = function (username, email, password, callback) {
 
     users.insert({"name": username, "password": password}, {safe:true}, function(err, inserted) {
         if (err) throw err;
@@ -27,16 +18,17 @@ exports.create = function (req, res, callback) {
     });
 }
 
-exports.read = function(err, user){
+exports.details = function(email, callback){
 
+    users.findOne({"email": email}, function (err, user) {
+        if (err) throw err;
+        callback(err, user);
+    })
 }
 
-exports.update = function(err, user, params){
-    var email = req.body.email
-    var username = req.body.username
-    var password = req.body.password
+exports.update = function(username, params, callback){
 
-    users.update({"id": user.id}, params, {upsert: true, safe: true}, function (err, updated) {
+    users.update({"username,": username}, params, {upsert: true, safe: true}, function (err, updated) {
         if (err) throw err;
         callback(err, updated);
     });
