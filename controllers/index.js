@@ -1,5 +1,5 @@
 
-["home", "user"].forEach(function(path){
+["home", "user", "list"].forEach(function(path){
         module.exports[path] = require("./" + path+"Controller");
 })
 

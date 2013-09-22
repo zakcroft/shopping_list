@@ -18,7 +18,7 @@ exports.create = function (username, email, password, callback) {
     });
 }
 
-exports.details = function(email, callback){
+exports.getUser = function(email, callback){
 
     users.findOne({"email": email}, function (err, user) {
         if (err) throw err;
@@ -36,4 +36,8 @@ exports.update = function(username, params, callback){
 
 exports.delete = function(err, user){
 
+    users.remove({"email,": email}, params, {safe: true}, function (err, updated) {
+        if (err) throw err;
+        callback(err, updated);
+    });
 }

@@ -1,6 +1,12 @@
 
 var userDao = require('../daos').userDao;
 
+
+exports.displayRegistration= function(req, res){
+    "use strict";
+    return res.render("register", {username: "", password: "", login_error: ""})
+}
+
 exports.register = function (req, res) {
 
     var email = req.body.email
@@ -28,7 +34,14 @@ exports.register = function (req, res) {
     });
 };
 
-exports.login =  function(req, res, callback){
+
+exports.displayLogin = function(){
+    "use strict";
+    return res.render("login", {username: "", password: "", login_error: ""})
+}
+
+
+exports.login =  function(req, res){
 
     var username = req.body.username;
     var password = req.body.password;
@@ -52,22 +65,45 @@ exports.login =  function(req, res, callback){
     })
 };
 
-exports.findUser = function (req, res, callback) {
+exports.displayLogout = function () {
+    "use strict";
+    return res.render("logout", {'message': "Thanks and see you soon"})
+}
 
-    userDao.find(req, res, function (err, user) {
+exports.loginOut = function (req, res) {
 
-        if (err) {
-            console.warn(err.message);
-            throw err;
+    userDao.getUser(email, function (err, user) {
 
-        } else if (user) {
-            return res.redirect("/welcome", {'username': user.username});
+        userDao.logout(email, function (err, user) {
 
-        } else {
-            // TODO logging and alerts/events
-            console.log("welcome: can't identify user...redirecting to signup");
-            return res.redirect("/signup");
-        }
+            if (err) {
+                console.warn(err.message);
+                throw err;
+
+            } else if (user) {
+                return res.redirect("/welcome", {'username': user.username});
+
+            } else {
+                // TODO logging and alerts/events
+                // force signout?
+                console.log("welcome: can't identify user...redirecting to welcome");
+                return res.redirect("/");
+            }
+        })
+
+    })
+
+    // TODO authenticate
+
+
+};
+
+
+exports.doSomething = function (req, res){
+
+    userDao.getUser(req, res, function (err, user) {
+
+
     })
 };
 

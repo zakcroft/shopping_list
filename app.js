@@ -10,12 +10,14 @@ var express = require('express'),
 
     app = express();
 
+app.use(express.cookieParser());
+app.use(express.session());
+app.use(app.router);
+
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-
-
 
 
 function start(){

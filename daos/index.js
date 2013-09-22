@@ -1,3 +1,3 @@
-["user"].forEach(function (path) {
+["user", "list"].forEach(function (path) {
     module.exports[path] = require("./" + path + "Dao");
 })
