@@ -18,8 +18,12 @@
 
     app = express();
 
+// performance for production
+//app.use(express.compress());
+//app.use(express.static(__dirname + '/public', { maxAge: 86400000 })); // caching for one day
+
 // statics
-app.use(express.static(__dirname + '/bower_components'));
+app.use(express.static(__dirname + '/public'));
 
 // sessions
 app.use(express.cookieParser());
