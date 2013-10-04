@@ -1,18 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-</head>
-<body>
-<h1></h1>
-<p>Welcome to </p>
+<% include shared/header %>
 
-<form action='/login' method='post'>
 
-    Email:<input type="text" name="email"  />
-    Password:<input type="password" name="password" />
-    <input type="submit" />
-</form>
-</body>
-</html>
+<div id=login" class="container">
+
+    <h3>Login</h3>
+
+    <form action='/login' method='post' class=form-horizontal">
+
+        <div class="row col-xs-18 col-sm-6 col-md-4">
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="email">
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Password">
+            </div>
+
+            <button type="submit" class="btn-block btn-primary">Login</button>
+        </div>
+
+    </form>
+</div>
+
+
+<% include shared/footer %>
