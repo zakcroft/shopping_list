@@ -1,5 +1,6 @@
 
 var userDao = require('../daos').userDao;
+var validator = require('../helpers/validator');
 
 
 exports.displayRegistration= function(req, res){
@@ -9,33 +10,40 @@ exports.displayRegistration= function(req, res){
 
 exports.register = function (req, res) {
 
-    var email = req.body.email
+    validator.validate(req, res);
+
     var username = req.body.username
     var password = req.body.password
+    var email = req.body.email
 
-    // TODO already registered?
+    userDao.getUser(email, function(err, user){
 
-    userDao.create(username, email, password, function (err, user) {
+        if(!user){
 
-        if (err) {
+            userDao.create(username, email, password, function (err, user) {
 
-            console.warn(err.message);
-            return res.redirect("/signup", {'message': "Sorry there was an error please try again"})
+                if (err) {
 
-        } else if (user) {
+                    console.warn(err.message);
+                    return res.redirect("/signup", {'message': "Sorry there was an error please try again"})
 
-            return res.redirect("/welcome", {'username': user.username})
+                } else if (user) {
 
-        } else {
-            // TODO logging and alerts/events
-            console.warn("Sign up failed");
-            return res.redirect("/signup");
+                    return res.redirect("/welcome", {'username': user.username})
+
+                } else {
+                    // TODO logging and alerts/events
+                    console.warn("Sign up failed");
+                    return res.redirect("/signup");
+                }
+            });
         }
-    });
+    })
+
 };
 
 
-exports.displayLogin = function(){
+exports.displayLogin = function(req, res){
     "use strict";
     return res.render("login", {username: "", password: "", login_error: ""})
 }
@@ -43,12 +51,12 @@ exports.displayLogin = function(){
 
 exports.login =  function(req, res){
 
-    var username = req.body.username;
+    var email = req.body.email;
     var password = req.body.password;
 
     // TODO authenticate
 
-    userDao.login(username, password, function(err, user){
+    userDao.login(email, password, function(err, user){
 
         if(err) {
             console.warn(err.message);

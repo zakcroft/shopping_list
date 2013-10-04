@@ -1,6 +1,14 @@
-var express = require('express'),
+    var util = require('util'),
+
+    express = require('express'),
+
+    expressValidator = require('express-validator'),
+
     //socketIo = require('socket.io'),
+
     mongo = require('./db/mongo'),
+
+    //MongoStore = require('connect-mongo')(express);
     //Router = require('./routes/router')
 
     //router = require('./routes'),
@@ -10,8 +18,17 @@ var express = require('express'),
 
     app = express();
 
+// statics
+app.use(express.static(__dirname + '/bower_components'));
+
+// sessions
 app.use(express.cookieParser());
-app.use(express.session());
+app.use(express.session({secret: '1234567890QWERTY'}));
+
+// forms
+app.use(express.bodyParser());
+app.use(expressValidator());
+
 app.use(app.router);
 
 
