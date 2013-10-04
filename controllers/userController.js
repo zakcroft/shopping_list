@@ -1,71 +1,70 @@
-
 var userDao = require('../daos').userDao;
 var validator = require('../helpers/validator');
 
 
-exports.displayRegistration= function(req, res){
+exports.displayRegistration = function (req, res) {
     "use strict";
     return res.render("register", {username: "", password: "", login_error: ""})
 }
 
 exports.register = function (req, res) {
 
-    validator.validate(req, res);
+    if (validator.validateRegistration(req, res)) {
 
-    var username = req.body.username
-    var password = req.body.password
-    var email = req.body.email
+        var username = req.body.username;
+        var email = req.body.email;
+        var password = req.body.password;
 
-    userDao.getUser(email, function(err, user){
+        userDao.getUser(email, function (err, user) {
 
-        if(!user){
+            if (!user) {
 
-            userDao.create(username, email, password, function (err, user) {
+                userDao.create(username, email, password, function (err, user) {
 
-                if (err) {
+                    if (err) {
 
-                    console.warn(err.message);
-                    return res.redirect("/signup", {'message': "Sorry there was an error please try again"})
+                        console.warn(err.message);
+                        return res.redirect("/signup", {'message': "Sorry there was an error please try again"})
 
-                } else if (user) {
+                    } else if (user) {
 
-                    return res.redirect("/welcome", {'username': user.username})
+                        return res.redirect("/welcome", {'username': user.username})
 
-                } else {
-                    // TODO logging and alerts/events
-                    console.warn("Sign up failed");
-                    return res.redirect("/signup");
-                }
-            });
-        }
-    })
-
+                    } else {
+                        // TODO logging and alerts/events
+                        console.warn("Sign up failed");
+                        return res.redirect("/signup");
+                    }
+                });
+            }
+        })
+    }
 };
 
 
-exports.displayLogin = function(req, res){
+exports.displayLogin = function (req, res) {
     "use strict";
     return res.render("login", {username: "", password: "", login_error: ""})
 }
 
 
-exports.login =  function(req, res){
+exports.login = function (req, res) {
 
     var email = req.body.email;
     var password = req.body.password;
 
     // TODO authenticate
 
-    userDao.login(email, password, function(err, user){
+    userDao.login(email, password, function (err, user) {
 
-        if(err) {
+        if (err) {
             console.warn(err.message);
             throw err;
 
-        }else if (user) {
+        } else if (user) {
             return res.redirect("/welcome", {'username': user.username});
 
-        }else {
+        } else {
             // TODO logging and alerts/events
             console.log("welcome: can't identify user...redirecting to signup");
             return res.redirect("/signup");
@@ -107,7 +106,7 @@ exports.loginOut = function (req, res) {
 };
 
 
-exports.doSomething = function (req, res){
+exports.doSomething = function (req, res) {
 
     userDao.getUser(req, res, function (err, user) {
 
