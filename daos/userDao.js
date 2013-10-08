@@ -12,7 +12,7 @@ exports.login = function (email,  password, callback) {
 
 exports.create = function (username, email, password, callback) {
 
-    users.insert({"name": username, "password": password}, {safe:true}, function(err, inserted) {
+    users.insert({"username": username, "password": password}, {safe:true}, function(err, inserted) {
         if (err) throw err;
         callback(err, inserted);
     });
@@ -34,7 +34,7 @@ exports.update = function(username, params, callback){
     });
 }
 
-exports.delete = function(err, user){
+exports.delete = function(err, user, callback){
 
     users.remove({"email,": email}, params, {safe: true}, function (err, updated) {
         if (err) throw err;

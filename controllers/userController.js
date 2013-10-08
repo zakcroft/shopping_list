@@ -4,12 +4,21 @@ var validator = require('../helpers/validator');
 
 exports.displayRegistration = function (req, res) {
     "use strict";
-    return res.render("register", {username: "", password: "", login_error: ""})
+    return res.render("register")
 }
 
 exports.register = function (req, res) {
+    "use strict";
+    validator.validateRegistration(req, function (err, errs) {
 
-    if (validator.validateRegistration(req, res)) {
+        if (err) throw err;
+
+        if(errs){
+            return res.render("register", {
+                errs: errs,
+                validated: req.body
+            })
+        }
 
         var username = req.body.username;
         var email = req.body.email;
@@ -22,23 +31,23 @@ exports.register = function (req, res) {
                 userDao.create(username, email, password, function (err, user) {
 
                     if (err) {
-
-                        console.warn(err.message);
-                        return res.redirect("/signup", {'message': "Sorry there was an error please try again"})
-
-                    } else if (user) {
-
-                        return res.redirect("/welcome", {'username': user.username})
-
-                    } else {
                         // TODO logging and alerts/events
                         console.warn("Sign up failed");
-                        return res.redirect("/signup");
+                        return res.redirect("/register", {'message': "Sorry there was an error please try again"});
+
+                    } else if (user && user[0]) {
+
+                        return res.redirect("/index", {'username': user[0].username});
+
                     }
                 });
+
+            } else {
+
+                return res.redirect("/login", {'message': "User already registered, please login in"})
             }
         })
-    }
+    })
 };
 
 

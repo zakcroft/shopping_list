@@ -1,0 +1,41 @@
+{{> header}}
+
+
+    <div id="register" class="container">
+
+        <div class="inner col-xs-18 col-sm-6 col-md-4 well">
+
+            <h3>Register</h3>
+
+            <form action='/register' method='post' class=form-horizontal">
+
+                <div class="form-group {{add-has-error-class errs.username}}">
+                    <input type="text" class="form-control" name="username" placeholder="Username" value="{{getFirstVal errs.username.value validated.username}}">
+                    {{add-error-msg errs.username}}
+                </div>
+
+
+                <div class="form-group {{add-has-error-class errs.email}}">
+                    <input type="email" class="form-control" name="email" placeholder="Email" value="{{getFirstVal errs.email.value validated.email}}">
+                    {{add-error-msg errs.email}}
+                </div>
+
+                <div class="form-group {{add-has-error-class errs.password}}">
+                    <input type="password" class="form-control" name="password" placeholder="Password" value="{{getFirstVal errs.password.value validated.password}}">
+                    {{add-error-msg errs.password}}
+                </div>
+
+                <div class="form-group {{add-has-error-class errs.confirm_password}}">
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" value="{{getFirstVal errs.confirm_password.value validated.confirm_password}}">
+                    {{add-error-msg errs.confirm_password}}
+                </div>
+
+                <button type="submit" class="btn-block btn-primary">Register</button>
+
+            </form>
+        </div>
+    </div>
+
+
+{{> scripts}}
+{{> footer}}

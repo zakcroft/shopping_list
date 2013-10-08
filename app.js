@@ -1,6 +1,12 @@
     var util = require('util'),
 
     express = require('express'),
+    consolidate = require('consolidate'),
+    handlebars = require('handlebars'),
+    handlebarsHelpers = require('./helpers/handlebars-helpers'),
+
+
+    fs = require('fs'),
 
     expressValidator = require('express-validator'),
 
@@ -37,11 +43,28 @@ app.use(app.router);
 
 
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+
+app.engine("html", consolidate.handlebars);
+app.set("view engine", "html");
+app.set("views", __dirname + "/views");
+
+
+ function registerPartials(){
+    var partials = "views/shared/";
+    fs.readdirSync(partials).forEach(function (file) {
+       var source = fs.readFileSync(partials + file, "utf8"),
+       partial = /(.+)\.html/.exec(file).pop();
+
+        handlebars.registerPartial(partial, source);
+    })
+ }
+
+
 
 
 function start(){
+    registerPartials();
+    handlebarsHelpers.registerAllHandlebarsHelpers()
     var router = require('./routes')(app);
     http.createServer(app).listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));
