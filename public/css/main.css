@@ -9,8 +9,16 @@
 
 }
 
-.form-input-error{
+.error-msg{
     display: inline-block;
     color: #B94A48;
     padding-top: 5px;
 }
+
+.large-error-msg {
+    display: inline-block;
+    color: #B94A48;
+    padding-top: 5px;
+    font-size: 16px;
+}
+

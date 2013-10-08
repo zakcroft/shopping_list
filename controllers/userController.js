@@ -9,13 +9,13 @@ exports.displayRegistration = function (req, res) {
 
 exports.register = function (req, res) {
     "use strict";
-    validator.validateRegistration(req, function (err, errs) {
+    validator.validateRegistration(req, function (err, validationErrors) {
 
         if (err) throw err;
 
-        if(errs){
+        if(validationErrors){
             return res.render("register", {
-                errs: errs,
+                errs: validationErrors,
                 validated: req.body
             })
         }
@@ -33,7 +33,9 @@ exports.register = function (req, res) {
                     if (err) {
                         // TODO logging and alerts/events
                         console.warn("Sign up failed");
-                        return res.redirect("/register", {'message': "Sorry there was an error please try again"});
+                        return res.render("register", {
+                            errs :{'message': "Sorry there was an error please try again"}
+                        });
 
                     } else if (user && user[0]) {
 
