@@ -3,4 +3,6 @@ var index = function (req, res) {
 
 }
 
-module.exports.index = index;
+module.exports = {
+    index:index
+}

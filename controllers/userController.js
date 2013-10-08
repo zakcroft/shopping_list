@@ -13,12 +13,12 @@ exports.register = function (req, res) {
 
         if (err) throw err;
 
-        if(validationErrors){
-            return res.render("register", {
-                errs: validationErrors,
-                validated: req.body
-            })
-        }
+//        if(validationErrors){
+//            return res.render("register", {
+//                errs: validationErrors,
+//                validated: req.body
+//            })
+//        }
 
         var username = req.body.username;
         var email = req.body.email;
@@ -39,14 +39,16 @@ exports.register = function (req, res) {
 
                     } else if (user && user[0]) {
 
-                        return res.redirect("/index", {'username': user[0].username});
+                        return res.redirect("/", {'username': user[0].username});
 
                     }
                 });
 
             } else {
 
-                return res.redirect("/login", {'message': "User already registered, please login in"})
+                return res.redirect("/login", {
+                    errs: {'message': "User already registered, please login in"}
+                })
             }
         })
     })

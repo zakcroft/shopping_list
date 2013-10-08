@@ -12,7 +12,7 @@ exports.login = function (email,  password, callback) {
 
 exports.create = function (username, email, password, callback) {
 
-    users.insert({"username": username, "password": password}, {safe:true}, function(err, inserted) {
+    users.insert({"username": username, "email": email, "password": password}, {safe:true}, function(err, inserted) {
         if (err) throw err;
         callback(err, inserted);
     });
