@@ -9,6 +9,19 @@
 
 }
 
+#login h3{
+   text-align:center;
+}
+
+#login .links a.login{
+   float: left;
+}
+
+#login .links a.register{
+   float: right;
+}
+
+
 .error-msg{
     display: inline-block;
     color: #B94A48;
@@ -20,5 +33,9 @@
     color: #B94A48;
     padding-top: 5px;
     font-size: 16px;
+}
+
+.clear {
+    clear: both;
 }
 
