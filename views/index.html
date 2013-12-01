@@ -1,9 +1,22 @@
-<% include shared/header %>
+{{> header}}
+
+<div id="login" class="container">
+
+    <div class="inner col-xs-18 col-sm-6 col-md-4 well">
+
+        <h3>Welcome to {{title}}</h3>
+
+        <div class="links">
+            <a class="login" href="login">Login</a>
+            <a class="register" href="/register">Register</a>
+
+            <div class="clear"></div>
+        </div>
+
+    </div>
+
+</div>
 
 
-<h3><%= username %>'s list</h3>
-
-<p>Welcome to <%= username %></p>
-
-<% include shared/scripts %>
-<% include shared/footer %>
+{{> scripts}}
+{{> footer}}
