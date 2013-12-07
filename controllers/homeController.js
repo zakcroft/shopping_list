@@ -1,5 +1,5 @@
 var index = function (req, res) {
-    res.render('index', { title: 'Shopping list' });
+    res.render('index', { message: 'Welcome to Shopping list' });
 
 }
 

@@ -36,7 +36,17 @@ app.use(express.cookieParser());
 app.use(express.session({secret: '1234567890QWERTY'}));
 
 // forms
-app.use(express.bodyParser());
+//For security sake, it's better to disable file upload
+// if your application doesn't need it. To do this,
+// use only the needed middleware,
+// i.e. don't use the bodyParser and multipart() middleware:
+
+//app.use(express.bodyParser());
+
+app.use(express.json());
+app.use(express.urlencoded());
+
+
 app.use(expressValidator());
 
 app.use(app.router);

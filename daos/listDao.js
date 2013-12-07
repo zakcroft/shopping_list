@@ -9,6 +9,14 @@ exports.create = function(list, callback){
     })
 }
 
+//exports.getAllUserList = function (userEmail, callback) {
+//
+//    lists.find({"creator": userEmail}, function (err, list) {
+//        if (err) throw err;
+//        callback(err, list);
+//    })
+//}
+
 
 exports.getList = function(id, callback){
 

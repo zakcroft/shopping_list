@@ -1,6 +1,7 @@
 var controllers = require('../controllers');
 var home = controllers.home;
 var user = controllers.user;
+var list = controllers.list;
 
 var router = function(app){
 
@@ -15,6 +16,10 @@ var router = function(app){
         app.get('/login', user.displayLogin);
 
         app.post('/login', user.login);
+
+
+        // list
+        app.get('/list', list.displayList);
 
 }
 

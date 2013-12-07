@@ -25,14 +25,26 @@ exports.createList = function(req, res){
 
 }
 
+exports.displayList = function (req, res) {
 
-exports.displayList = function(reg, res){
-
-    listDao.getList(res.listId, function(err, list){
+    userDao.findOne({"_id": req.userId}, function (err, user) {
         if (err) throw err;
-        res.redirect("/list", list)
+
+        listDao.getAllUserList(user._id, function (err, list) {
+            if (err) throw err;
+            res.redirect("/list", list)
+        })
     })
 }
+
+
+//exports.displayList = function(req, res){
+//
+//    listDao.getList(req.listId, function(err, list){
+//        if (err) throw err;
+//        res.redirect("list/list", list)
+//    })
+//}
 
 exports.addItem = function (req, res) {
     "use strict";

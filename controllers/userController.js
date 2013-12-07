@@ -4,7 +4,7 @@ var validator = require('../helpers/validator');
 
 exports.displayRegistration = function (req, res) {
     "use strict";
-    return res.render("register")
+    return res.render("user/register")
 }
 
 exports.register = function (req, res) {
@@ -13,12 +13,12 @@ exports.register = function (req, res) {
 
         if (err) throw err;
 
-//        if(validationErrors){
-//            return res.render("register", {
-//                errs: validationErrors,
-//                validated: req.body
-//            })
-//        }
+        if(validationErrors){
+            return res.render("user/register", {
+                errs: validationErrors,
+                validated: req.body
+            })
+        }
 
         var username = req.body.username;
         var email = req.body.email;
@@ -33,7 +33,7 @@ exports.register = function (req, res) {
                     if (err) {
                         // TODO logging and alerts/events
                         console.warn("Sign up failed");
-                        return res.render("register", {
+                        return res.render("user/register", {
                             errs :{'message': "Sorry there was an error please try again"}
                         });
 
@@ -57,7 +57,7 @@ exports.register = function (req, res) {
 
 exports.displayLogin = function (req, res) {
     "use strict";
-    return res.render("login", {username: "", password: "", login_error: ""})
+    return res.render("user/login", {username: "", password: "", login_error: ""})
 }
 
 
@@ -87,7 +87,7 @@ exports.login = function (req, res) {
 
 exports.displayLogout = function () {
     "use strict";
-    return res.render("logout", {'message': "Thanks and see you soon"})
+    return res.render("index", {'message': "Thanks and see you soon"})
 }
 
 exports.loginOut = function (req, res) {
